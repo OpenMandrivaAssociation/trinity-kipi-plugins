@@ -1,6 +1,5 @@
-#
-# Please submit bugfixes or comments via http://www.trinitydesktop.org/
-#
+%bcond clang 1
+%bcond gpod 1
 
 # BUILD WARNING:
 #  Remove qt-devel and qt3-devel and any kde*-devel on your system !
@@ -11,6 +10,8 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
+%define pkg_rel 2
+
 %define tde_pkg kipi-plugins
 %define tde_prefix /opt/trinity
 %define tde_bindir %{tde_prefix}/bin
@@ -24,35 +25,24 @@
 %define tde_tdeincludedir %{tde_includedir}/tde
 %define tde_tdelibdir %{tde_libdir}/trinity
 
-%if 0%{?mdkversion} || 0%{?mgaversion} || 0%{?pclinuxos}
 %define kipi-plugins %{_lib}kipi
-%else
-%define kipi-plugins kipi-plugins
-%endif
 
-%if 0%{?mdkversion}
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
 %define _disable_rebuild_configure 1
-%endif
 
 %define tarball_name %{tde_pkg}-trinity
-%global toolchain %(readlink /usr/bin/cc)
 
 Name:		trinity-%{tde_pkg}
 Epoch:		%{tde_epoch}
 Version:	0.1.6
-Release:	%{?tde_version}_%{?!preversion:1}%{?preversion:0_%{preversion}}%{?dist}
+Release:	%{?tde_version}_%{?!preversion:%{pkg_rel}}%{?preversion:0_%{preversion}}%{?dist}
 Summary:	Image manipulation/handling plugins for KIPI aware programs [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
 #URL:		http://www.kipi-plugins.org/
 
-%if 0%{?suse_version}
-License:	GPL-2.0+
-%else
 License:	GPLv2+
-%endif
 
 #Vendor:		Trinity Desktop
 #Packager:	Francois Andriot <francois.andriot@free.fr>
@@ -61,7 +51,6 @@ Prefix:			%{tde_prefix}
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
-BuildRequires: autoconf automake libtool 
 BuildRequires: trinity-tdelibs-devel >= %{tde_version}
 BuildRequires: trinity-tdepim-devel >= %{tde_version}
 BuildRequires: trinity-libkdcraw-devel >= %{tde_version}
@@ -71,9 +60,8 @@ BuildRequires: trinity-libkipi-devel >= %{tde_version}
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig
 BuildRequires: gettext
-%if "%{?toolchain}" != "clang"
-BuildRequires: gcc-c++
-%endif
+
+%{!?with_clang:BuildRequires: gcc-c++}
 
 # JPEG support
 BuildRequires:  pkgconfig(libjpeg)
@@ -82,10 +70,7 @@ BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(exiv2)
 
 # GPOD (ipod) support
-%if 0%{?rhel} == 6 || 0%{?rhel} == 7 || 0%{?rhel} == 8 || 0%{?fedora} || 0%{?mdkversion} || 0%{?mgaversion} || 0%{?suse_version}
-%define with_gpod 1
-BuildRequires:  pkgconfig(libgpod-1.0)
-%endif
+%{?with_gpod:BuildRequires:  pkgconfig(libgpod-1.0)}
 
 # LCMS support
 BuildRequires:  pkgconfig(lcms)
@@ -112,12 +97,7 @@ BuildRequires:  pkgconfig(xft)
 
 # AUTOTOOLS
 BuildRequires: automake autoconf libtool
-%if 0%{?mgaversion} || 0%{?mdkversion}
 BuildRequires:	%{_lib}ltdl-devel
-%endif
-%if 0%{?fedora} || 0%{?rhel} >= 5 || 0%{?suse_version} >= 1220
-BuildRequires:	libtool-ltdl-devel
-%endif
 
 %description
 KIPI plugins (TDE Image Plugin Interface) is an effort to develop a
@@ -159,18 +139,11 @@ HTMLGallery:         Export images to HTML
 SimpleviewerExport:  Export images in a nice flash movie
 GPSSync:             Geolocalize pictures
 MetadataEdit:        Edit EXIF and IPTC pictures metadata
-%if 0%{?with_gpod}
+%if %{with gpod}
 IpodExport:          Export images to an ipod device
 %endif
 PicasaWebExport:     Export pictures to Picasa web service
 
-##########
-
-%if 0%{?suse_version} && 0%{?opensuse_bs} == 0
-%debug_package
-%endif
-
-##########
 
 %prep
 %autosetup -n %{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}
@@ -233,7 +206,7 @@ export PATH="%{tde_bindir}:${PATH}"
 %{tde_tdelibdir}/kipiplugin_gpssync.so
 %{tde_tdelibdir}/kipiplugin_htmlexport.la
 %{tde_tdelibdir}/kipiplugin_htmlexport.so
-%if 0%{?with_gpod}
+%if %{with gpod}
 %{tde_tdelibdir}/kipiplugin_ipodexport.la
 %{tde_tdelibdir}/kipiplugin_ipodexport.so
 %endif
@@ -285,7 +258,7 @@ export PATH="%{tde_bindir}:${PATH}"
 %{tde_datadir}/services/kipiplugin_galleryexport.desktop
 %{tde_datadir}/services/kipiplugin_gpssync.desktop
 %{tde_datadir}/services/kipiplugin_htmlexport.desktop
-%if 0%{?with_gpod}
+%if %{with gpod}
 %{tde_datadir}/services/kipiplugin_ipodexport.desktop
 %endif
 %{tde_datadir}/services/kipiplugin_jpeglossless.desktop
