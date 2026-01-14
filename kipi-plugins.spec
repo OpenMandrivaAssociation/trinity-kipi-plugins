@@ -38,6 +38,8 @@ License:	GPLv2+
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
+BuildRequires: make
+
 BuildRequires: trinity-tdelibs-devel >= %{tde_version}
 BuildRequires: trinity-tdepim-devel >= %{tde_version}
 BuildRequires: trinity-libkdcraw-devel >= %{tde_version}
