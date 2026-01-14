@@ -14,16 +14,7 @@
 
 %define tde_pkg kipi-plugins
 %define tde_prefix /opt/trinity
-%define tde_bindir %{tde_prefix}/bin
-%define tde_datadir %{tde_prefix}/share
-%define tde_docdir %{tde_datadir}/doc
-%define tde_includedir %{tde_prefix}/include
-%define tde_libdir %{tde_prefix}/%{_lib}
-%define tde_mandir %{tde_datadir}/man
-%define tde_tdeappdir %{tde_datadir}/applications/tde
-%define tde_tdedocdir %{tde_docdir}/tde
-%define tde_tdeincludedir %{tde_includedir}/tde
-%define tde_tdelibdir %{tde_libdir}/trinity
+
 
 %define kipi-plugins %{_lib}kipi
 
@@ -44,10 +35,6 @@ URL:		http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-#Vendor:		Trinity Desktop
-#Packager:	Francois Andriot <francois.andriot@free.fr>
-
-Prefix:			%{tde_prefix}
 
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
@@ -155,175 +142,174 @@ PicasaWebExport:     Export pictures to Picasa web service
 
 %build
 unset QTDIR QTINC QTLIB
-export PATH="%{tde_bindir}:${PATH}"
+export PATH="%{tde_prefix}/bin:${PATH}"
 
 %configure \
   --prefix=%{tde_prefix} \
   --exec-prefix=%{tde_prefix} \
-  --datadir=%{tde_datadir} \
-  --libdir=%{tde_libdir} \
-  --mandir=%{tde_mandir} \
-  --includedir=%{tde_tdeincludedir} \
+  --datadir=%{tde_prefix}/share \
+  --libdir=%{tde_prefix}/%{_lib} \
+  --mandir=%{tde_prefix}/share/man \
+  --includedir=%{tde_prefix}/include/tde \
   \
   --disable-dependency-tracking \
   --disable-debug \
   --enable-new-ldflags \
   --enable-final \
   --enable-closure \
-  --enable-rpath \
-  --disable-gcc-hidden-visibility
+  %{?with_clang:--disable-gcc-hidden-visibility}
 
 %__make %{?_smp_mflags}
 
 
 %install
-export PATH="%{tde_bindir}:${PATH}"
+export PATH="%{tde_prefix}/bin:${PATH}"
 %__make install DESTDIR=%{buildroot}
 
 
 %files
 %defattr(-,root,root,-)
-%{tde_bindir}/images2mpg
-%{tde_libdir}/libkipiplugins.la
-%{tde_libdir}/libkipiplugins.so
-%{tde_libdir}/libkipiplugins.so.0
-%{tde_libdir}/libkipiplugins.so.0.0.1
-%{tde_tdelibdir}/kipiplugin_acquireimages.la
-%{tde_tdelibdir}/kipiplugin_acquireimages.so
-%{tde_tdelibdir}/kipiplugin_batchprocessimages.la
-%{tde_tdelibdir}/kipiplugin_batchprocessimages.so
-%{tde_tdelibdir}/kipiplugin_calendar.la
-%{tde_tdelibdir}/kipiplugin_calendar.so
-%{tde_tdelibdir}/kipiplugin_cdarchiving.la
-%{tde_tdelibdir}/kipiplugin_cdarchiving.so
-%{tde_tdelibdir}/kipiplugin_findimages.la
-%{tde_tdelibdir}/kipiplugin_findimages.so
-%{tde_tdelibdir}/kipiplugin_flickrexport.la
-%{tde_tdelibdir}/kipiplugin_flickrexport.so
-%{tde_tdelibdir}/kipiplugin_galleryexport.la
-%{tde_tdelibdir}/kipiplugin_galleryexport.so
-%{tde_tdelibdir}/kipiplugin_gpssync.la
-%{tde_tdelibdir}/kipiplugin_gpssync.so
-%{tde_tdelibdir}/kipiplugin_htmlexport.la
-%{tde_tdelibdir}/kipiplugin_htmlexport.so
+%{tde_prefix}/bin/images2mpg
+%{tde_prefix}/%{_lib}/libkipiplugins.la
+%{tde_prefix}/%{_lib}/libkipiplugins.so
+%{tde_prefix}/%{_lib}/libkipiplugins.so.0
+%{tde_prefix}/%{_lib}/libkipiplugins.so.0.0.1
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_acquireimages.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_acquireimages.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_batchprocessimages.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_batchprocessimages.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_calendar.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_calendar.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_cdarchiving.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_cdarchiving.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_findimages.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_findimages.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_flickrexport.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_flickrexport.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_galleryexport.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_galleryexport.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_gpssync.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_gpssync.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_htmlexport.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_htmlexport.so
 %if %{with gpod}
-%{tde_tdelibdir}/kipiplugin_ipodexport.la
-%{tde_tdelibdir}/kipiplugin_ipodexport.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_ipodexport.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_ipodexport.so
 %endif
-%{tde_tdelibdir}/kipiplugin_jpeglossless.la
-%{tde_tdelibdir}/kipiplugin_jpeglossless.so
-%{tde_tdelibdir}/kipiplugin_kameraklient.la
-%{tde_tdelibdir}/kipiplugin_kameraklient.so
-%{tde_tdelibdir}/kipiplugin_metadataedit.la
-%{tde_tdelibdir}/kipiplugin_metadataedit.so
-%{tde_tdelibdir}/kipiplugin_mpegencoder.la
-%{tde_tdelibdir}/kipiplugin_mpegencoder.so
-%{tde_tdelibdir}/kipiplugin_picasawebexport.la
-%{tde_tdelibdir}/kipiplugin_picasawebexport.so
-%{tde_tdelibdir}/kipiplugin_printwizard.la
-%{tde_tdelibdir}/kipiplugin_printwizard.so
-%{tde_tdelibdir}/kipiplugin_rawconverter.la
-%{tde_tdelibdir}/kipiplugin_rawconverter.so
-%{tde_tdelibdir}/kipiplugin_sendimages.la
-%{tde_tdelibdir}/kipiplugin_sendimages.so
-%{tde_tdelibdir}/kipiplugin_simpleviewer.la
-%{tde_tdelibdir}/kipiplugin_simpleviewer.so
-%{tde_tdelibdir}/kipiplugin_slideshow.la
-%{tde_tdelibdir}/kipiplugin_slideshow.so
-%{tde_tdelibdir}/kipiplugin_timeadjust.la
-%{tde_tdelibdir}/kipiplugin_timeadjust.so
-%{tde_tdelibdir}/kipiplugin_viewer.la
-%{tde_tdelibdir}/kipiplugin_viewer.so
-%{tde_tdelibdir}/kipiplugin_wallpaper.la
-%{tde_tdelibdir}/kipiplugin_wallpaper.so
-%{tde_datadir}/applnk/.hidden/kipi-plugins.desktop
-%{tde_datadir}/apps/kipi/
-%{tde_datadir}/apps/kipiplugin_batchprocessimages/
-%{tde_datadir}/apps/kipiplugin_findimages/
-%{tde_datadir}/apps/kipiplugin_galleryexport/
-%{tde_datadir}/apps/kipiplugin_gpssync/
-%{tde_datadir}/apps/kipiplugin_htmlexport/
-%{tde_datadir}/apps/kipiplugin_jpeglossless/
-%{tde_datadir}/apps/kipiplugin_rawconverter/
-%{tde_datadir}/apps/kipiplugin_simpleviewerexport/
-%{tde_datadir}/apps/kipiplugin_slideshow/
-%{tde_datadir}/apps/kipiplugin_viewer/
-%{tde_datadir}/config.kcfg/htmlexportconfig.kcfg
-%{tde_datadir}/services/kipiplugin_acquireimages.desktop
-%{tde_datadir}/services/kipiplugin_batchprocessimages.desktop
-%{tde_datadir}/services/kipiplugin_calendar.desktop
-%{tde_datadir}/services/kipiplugin_cdarchiving.desktop
-%{tde_datadir}/services/kipiplugin_findimages.desktop
-%{tde_datadir}/services/kipiplugin_flickrexport.desktop
-%{tde_datadir}/services/kipiplugin_galleryexport.desktop
-%{tde_datadir}/services/kipiplugin_gpssync.desktop
-%{tde_datadir}/services/kipiplugin_htmlexport.desktop
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_jpeglossless.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_jpeglossless.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_kameraklient.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_kameraklient.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_metadataedit.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_metadataedit.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_mpegencoder.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_mpegencoder.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_picasawebexport.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_picasawebexport.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_printwizard.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_printwizard.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_rawconverter.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_rawconverter.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_sendimages.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_sendimages.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_simpleviewer.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_simpleviewer.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_slideshow.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_slideshow.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_timeadjust.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_timeadjust.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_viewer.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_viewer.so
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_wallpaper.la
+%{tde_prefix}/%{_lib}/trinity/kipiplugin_wallpaper.so
+%{tde_prefix}/share/applnk/.hidden/kipi-plugins.desktop
+%{tde_prefix}/share/apps/kipi/
+%{tde_prefix}/share/apps/kipiplugin_batchprocessimages/
+%{tde_prefix}/share/apps/kipiplugin_findimages/
+%{tde_prefix}/share/apps/kipiplugin_galleryexport/
+%{tde_prefix}/share/apps/kipiplugin_gpssync/
+%{tde_prefix}/share/apps/kipiplugin_htmlexport/
+%{tde_prefix}/share/apps/kipiplugin_jpeglossless/
+%{tde_prefix}/share/apps/kipiplugin_rawconverter/
+%{tde_prefix}/share/apps/kipiplugin_simpleviewerexport/
+%{tde_prefix}/share/apps/kipiplugin_slideshow/
+%{tde_prefix}/share/apps/kipiplugin_viewer/
+%{tde_prefix}/share/config.kcfg/htmlexportconfig.kcfg
+%{tde_prefix}/share/services/kipiplugin_acquireimages.desktop
+%{tde_prefix}/share/services/kipiplugin_batchprocessimages.desktop
+%{tde_prefix}/share/services/kipiplugin_calendar.desktop
+%{tde_prefix}/share/services/kipiplugin_cdarchiving.desktop
+%{tde_prefix}/share/services/kipiplugin_findimages.desktop
+%{tde_prefix}/share/services/kipiplugin_flickrexport.desktop
+%{tde_prefix}/share/services/kipiplugin_galleryexport.desktop
+%{tde_prefix}/share/services/kipiplugin_gpssync.desktop
+%{tde_prefix}/share/services/kipiplugin_htmlexport.desktop
 %if %{with gpod}
-%{tde_datadir}/services/kipiplugin_ipodexport.desktop
+%{tde_prefix}/share/services/kipiplugin_ipodexport.desktop
 %endif
-%{tde_datadir}/services/kipiplugin_jpeglossless.desktop
-%{tde_datadir}/services/kipiplugin_kameraklient.desktop
-%{tde_datadir}/services/kipiplugin_metadataedit.desktop
-%{tde_datadir}/services/kipiplugin_mpegencoder.desktop
-%{tde_datadir}/services/kipiplugin_picasawebexport.desktop
-%{tde_datadir}/services/kipiplugin_printwizard.desktop
-%{tde_datadir}/services/kipiplugin_rawconverter.desktop
-%{tde_datadir}/services/kipiplugin_sendimages.desktop
-%{tde_datadir}/services/kipiplugin_simpleviewer.desktop
-%{tde_datadir}/services/kipiplugin_slideshow.desktop
-%{tde_datadir}/services/kipiplugin_timeadjust.desktop
-%{tde_datadir}/services/kipiplugin_viewer.desktop
-%{tde_datadir}/services/kipiplugin_wallpaper.desktop
-%{tde_mandir}/man1/images2mpg.1*
-%{tde_tdedocdir}/HTML/de/kipi-plugins/
-%{tde_tdedocdir}/HTML/en/kipi-plugins/
-%{tde_tdedocdir}/HTML/es/kipi-plugins/
-%{tde_tdedocdir}/HTML/et/kipi-plugins/
-%{tde_tdedocdir}/HTML/it/kipi-plugins/
-%{tde_tdedocdir}/HTML/nl/kipi-plugins/
-%{tde_tdedocdir}/HTML/pt_BR/kipi-plugins/
-%{tde_tdedocdir}/HTML/ru/kipi-plugins/
-%{tde_tdedocdir}/HTML/sv/kipi-plugins/
-%lang(ar) %{tde_datadir}/locale/ar/LC_MESSAGES/*.mo
-%lang(be) %{tde_datadir}/locale/be/LC_MESSAGES/*.mo
-%lang(br) %{tde_datadir}/locale/br/LC_MESSAGES/*.mo
-%lang(ca) %{tde_datadir}/locale/ca/LC_MESSAGES/*.mo
-%lang(cs) %{tde_datadir}/locale/cs/LC_MESSAGES/*.mo
-%lang(cy) %{tde_datadir}/locale/cy/LC_MESSAGES/*.mo
-%lang(da) %{tde_datadir}/locale/da/LC_MESSAGES/*.mo
-%lang(de) %{tde_datadir}/locale/de/LC_MESSAGES/*.mo
-%lang(el) %{tde_datadir}/locale/el/LC_MESSAGES/*.mo
-%lang(en_GB) %{tde_datadir}/locale/en_GB/LC_MESSAGES/*.mo
-%lang(es) %{tde_datadir}/locale/es/LC_MESSAGES/*.mo
-%lang(et) %{tde_datadir}/locale/et/LC_MESSAGES/*.mo
-%lang(fi) %{tde_datadir}/locale/fi/LC_MESSAGES/*.mo
-%lang(fr) %{tde_datadir}/locale/fr/LC_MESSAGES/*.mo
-%lang(ga) %{tde_datadir}/locale/ga/LC_MESSAGES/*.mo
-%lang(gl) %{tde_datadir}/locale/gl/LC_MESSAGES/*.mo
-%lang(hu) %{tde_datadir}/locale/hu/LC_MESSAGES/*.mo
-%lang(is) %{tde_datadir}/locale/is/LC_MESSAGES/*.mo
-%lang(it) %{tde_datadir}/locale/it/LC_MESSAGES/*.mo
-%lang(ja) %{tde_datadir}/locale/ja/LC_MESSAGES/*.mo
-%lang(lt) %{tde_datadir}/locale/lt/LC_MESSAGES/*.mo
-%lang(ms) %{tde_datadir}/locale/ms/LC_MESSAGES/*.mo
-%lang(mt) %{tde_datadir}/locale/mt/LC_MESSAGES/*.mo
-%lang(nb) %{tde_datadir}/locale/nb/LC_MESSAGES/*.mo
-%lang(nds) %{tde_datadir}/locale/nds/LC_MESSAGES/*.mo
-%lang(nl) %{tde_datadir}/locale/nl/LC_MESSAGES/*.mo
-%lang(nn) %{tde_datadir}/locale/nn/LC_MESSAGES/*.mo
-%lang(pa) %{tde_datadir}/locale/pa/LC_MESSAGES/*.mo
-%lang(pl) %{tde_datadir}/locale/pl/LC_MESSAGES/*.mo
-%lang(pt) %{tde_datadir}/locale/pt/LC_MESSAGES/*.mo
-%lang(pt_BR) %{tde_datadir}/locale/pt_BR/LC_MESSAGES/*.mo
-%lang(ru) %{tde_datadir}/locale/ru/LC_MESSAGES/*.mo
-%lang(rw) %{tde_datadir}/locale/rw/LC_MESSAGES/*.mo
-%lang(sk) %{tde_datadir}/locale/sk/LC_MESSAGES/*.mo
-%lang(sr) %{tde_datadir}/locale/sr/LC_MESSAGES/*.mo
-%lang(sr@Latn) %{tde_datadir}/locale/sr@Latn/LC_MESSAGES/*.mo
-%lang(sv) %{tde_datadir}/locale/sv/LC_MESSAGES/*.mo
-%lang(ta) %{tde_datadir}/locale/ta/LC_MESSAGES/*.mo
-%lang(th) %{tde_datadir}/locale/th/LC_MESSAGES/*.mo
-%lang(tr) %{tde_datadir}/locale/tr/LC_MESSAGES/*.mo
-%lang(uk) %{tde_datadir}/locale/uk/LC_MESSAGES/*.mo
-%lang(zh_CN) %{tde_datadir}/locale/zh_CN/LC_MESSAGES/*.mo
+%{tde_prefix}/share/services/kipiplugin_jpeglossless.desktop
+%{tde_prefix}/share/services/kipiplugin_kameraklient.desktop
+%{tde_prefix}/share/services/kipiplugin_metadataedit.desktop
+%{tde_prefix}/share/services/kipiplugin_mpegencoder.desktop
+%{tde_prefix}/share/services/kipiplugin_picasawebexport.desktop
+%{tde_prefix}/share/services/kipiplugin_printwizard.desktop
+%{tde_prefix}/share/services/kipiplugin_rawconverter.desktop
+%{tde_prefix}/share/services/kipiplugin_sendimages.desktop
+%{tde_prefix}/share/services/kipiplugin_simpleviewer.desktop
+%{tde_prefix}/share/services/kipiplugin_slideshow.desktop
+%{tde_prefix}/share/services/kipiplugin_timeadjust.desktop
+%{tde_prefix}/share/services/kipiplugin_viewer.desktop
+%{tde_prefix}/share/services/kipiplugin_wallpaper.desktop
+%{tde_prefix}/share/man/man1/images2mpg.1*
+%{tde_prefix}/share/doc/tde/HTML/de/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/en/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/es/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/et/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/it/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/nl/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/pt_BR/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/ru/kipi-plugins/
+%{tde_prefix}/share/doc/tde/HTML/sv/kipi-plugins/
+%lang(ar) %{tde_prefix}/share/locale/ar/LC_MESSAGES/*.mo
+%lang(be) %{tde_prefix}/share/locale/be/LC_MESSAGES/*.mo
+%lang(br) %{tde_prefix}/share/locale/br/LC_MESSAGES/*.mo
+%lang(ca) %{tde_prefix}/share/locale/ca/LC_MESSAGES/*.mo
+%lang(cs) %{tde_prefix}/share/locale/cs/LC_MESSAGES/*.mo
+%lang(cy) %{tde_prefix}/share/locale/cy/LC_MESSAGES/*.mo
+%lang(da) %{tde_prefix}/share/locale/da/LC_MESSAGES/*.mo
+%lang(de) %{tde_prefix}/share/locale/de/LC_MESSAGES/*.mo
+%lang(el) %{tde_prefix}/share/locale/el/LC_MESSAGES/*.mo
+%lang(en_GB) %{tde_prefix}/share/locale/en_GB/LC_MESSAGES/*.mo
+%lang(es) %{tde_prefix}/share/locale/es/LC_MESSAGES/*.mo
+%lang(et) %{tde_prefix}/share/locale/et/LC_MESSAGES/*.mo
+%lang(fi) %{tde_prefix}/share/locale/fi/LC_MESSAGES/*.mo
+%lang(fr) %{tde_prefix}/share/locale/fr/LC_MESSAGES/*.mo
+%lang(ga) %{tde_prefix}/share/locale/ga/LC_MESSAGES/*.mo
+%lang(gl) %{tde_prefix}/share/locale/gl/LC_MESSAGES/*.mo
+%lang(hu) %{tde_prefix}/share/locale/hu/LC_MESSAGES/*.mo
+%lang(is) %{tde_prefix}/share/locale/is/LC_MESSAGES/*.mo
+%lang(it) %{tde_prefix}/share/locale/it/LC_MESSAGES/*.mo
+%lang(ja) %{tde_prefix}/share/locale/ja/LC_MESSAGES/*.mo
+%lang(lt) %{tde_prefix}/share/locale/lt/LC_MESSAGES/*.mo
+%lang(ms) %{tde_prefix}/share/locale/ms/LC_MESSAGES/*.mo
+%lang(mt) %{tde_prefix}/share/locale/mt/LC_MESSAGES/*.mo
+%lang(nb) %{tde_prefix}/share/locale/nb/LC_MESSAGES/*.mo
+%lang(nds) %{tde_prefix}/share/locale/nds/LC_MESSAGES/*.mo
+%lang(nl) %{tde_prefix}/share/locale/nl/LC_MESSAGES/*.mo
+%lang(nn) %{tde_prefix}/share/locale/nn/LC_MESSAGES/*.mo
+%lang(pa) %{tde_prefix}/share/locale/pa/LC_MESSAGES/*.mo
+%lang(pl) %{tde_prefix}/share/locale/pl/LC_MESSAGES/*.mo
+%lang(pt) %{tde_prefix}/share/locale/pt/LC_MESSAGES/*.mo
+%lang(pt_BR) %{tde_prefix}/share/locale/pt_BR/LC_MESSAGES/*.mo
+%lang(ru) %{tde_prefix}/share/locale/ru/LC_MESSAGES/*.mo
+%lang(rw) %{tde_prefix}/share/locale/rw/LC_MESSAGES/*.mo
+%lang(sk) %{tde_prefix}/share/locale/sk/LC_MESSAGES/*.mo
+%lang(sr) %{tde_prefix}/share/locale/sr/LC_MESSAGES/*.mo
+%lang(sr@Latn) %{tde_prefix}/share/locale/sr@Latn/LC_MESSAGES/*.mo
+%lang(sv) %{tde_prefix}/share/locale/sv/LC_MESSAGES/*.mo
+%lang(ta) %{tde_prefix}/share/locale/ta/LC_MESSAGES/*.mo
+%lang(th) %{tde_prefix}/share/locale/th/LC_MESSAGES/*.mo
+%lang(tr) %{tde_prefix}/share/locale/tr/LC_MESSAGES/*.mo
+%lang(uk) %{tde_prefix}/share/locale/uk/LC_MESSAGES/*.mo
+%lang(zh_CN) %{tde_prefix}/share/locale/zh_CN/LC_MESSAGES/*.mo
 
