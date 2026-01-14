@@ -49,6 +49,7 @@ BuildRequires: trinity-libkipi-devel >= %{tde_version}
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig
 BuildRequires: gettext
+BuildRequires: nas-devel
 
 %{!?with_clang:BuildRequires: gcc-c++}
 
