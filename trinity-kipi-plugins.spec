@@ -39,9 +39,9 @@ BuildRequires: make
 
 BuildRequires: trinity-tdelibs-devel >= %{tde_version}
 BuildRequires: trinity-tdepim-devel >= %{tde_version}
-BuildRequires: trinity-libkdcraw-devel >= %{tde_version}
-BuildRequires: trinity-libkexiv2-devel >= %{tde_version}
-BuildRequires: trinity-libkipi-devel >= %{tde_version}
+BuildRequires: trinity-%{_lib}kdcraw-devel >= %{tde_version}
+BuildRequires: trinity-%{_lib}kexiv2-devel
+BuildRequires: trinity-%{_lib}kipi-devel
 
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig
@@ -167,7 +167,7 @@ export PATH="%{tde_prefix}/bin:${PATH}"
 %__make install DESTDIR=%{buildroot}
 
 
-%files -f %{name}.lang
+%files
 %defattr(-,root,root,-)
 %{tde_prefix}/bin/images2mpg
 %{tde_prefix}/%{_lib}/libkipiplugins.la
@@ -270,46 +270,46 @@ export PATH="%{tde_prefix}/bin:${PATH}"
 %{tde_prefix}/share/doc/tde/HTML/pt_BR/kipi-plugins/
 %{tde_prefix}/share/doc/tde/HTML/ru/kipi-plugins/
 %{tde_prefix}/share/doc/tde/HTML/sv/kipi-plugins/
-# %lang(ar) %{tde_prefix}/share/locale/ar/LC_MESSAGES/*.mo
-# %lang(be) %{tde_prefix}/share/locale/be/LC_MESSAGES/*.mo
-# %lang(br) %{tde_prefix}/share/locale/br/LC_MESSAGES/*.mo
-# %lang(ca) %{tde_prefix}/share/locale/ca/LC_MESSAGES/*.mo
-# %lang(cs) %{tde_prefix}/share/locale/cs/LC_MESSAGES/*.mo
-# %lang(cy) %{tde_prefix}/share/locale/cy/LC_MESSAGES/*.mo
-# %lang(da) %{tde_prefix}/share/locale/da/LC_MESSAGES/*.mo
-# %lang(de) %{tde_prefix}/share/locale/de/LC_MESSAGES/*.mo
-# %lang(el) %{tde_prefix}/share/locale/el/LC_MESSAGES/*.mo
-# %lang(en_GB) %{tde_prefix}/share/locale/en_GB/LC_MESSAGES/*.mo
-# %lang(es) %{tde_prefix}/share/locale/es/LC_MESSAGES/*.mo
-# %lang(et) %{tde_prefix}/share/locale/et/LC_MESSAGES/*.mo
-# %lang(fi) %{tde_prefix}/share/locale/fi/LC_MESSAGES/*.mo
-# %lang(fr) %{tde_prefix}/share/locale/fr/LC_MESSAGES/*.mo
-# %lang(ga) %{tde_prefix}/share/locale/ga/LC_MESSAGES/*.mo
-# %lang(gl) %{tde_prefix}/share/locale/gl/LC_MESSAGES/*.mo
-# %lang(hu) %{tde_prefix}/share/locale/hu/LC_MESSAGES/*.mo
-# %lang(is) %{tde_prefix}/share/locale/is/LC_MESSAGES/*.mo
-# %lang(it) %{tde_prefix}/share/locale/it/LC_MESSAGES/*.mo
-# %lang(ja) %{tde_prefix}/share/locale/ja/LC_MESSAGES/*.mo
-# %lang(lt) %{tde_prefix}/share/locale/lt/LC_MESSAGES/*.mo
-# %lang(ms) %{tde_prefix}/share/locale/ms/LC_MESSAGES/*.mo
-# %lang(mt) %{tde_prefix}/share/locale/mt/LC_MESSAGES/*.mo
-# %lang(nb) %{tde_prefix}/share/locale/nb/LC_MESSAGES/*.mo
-# %lang(nds) %{tde_prefix}/share/locale/nds/LC_MESSAGES/*.mo
-# %lang(nl) %{tde_prefix}/share/locale/nl/LC_MESSAGES/*.mo
-# %lang(nn) %{tde_prefix}/share/locale/nn/LC_MESSAGES/*.mo
-# %lang(pa) %{tde_prefix}/share/locale/pa/LC_MESSAGES/*.mo
-# %lang(pl) %{tde_prefix}/share/locale/pl/LC_MESSAGES/*.mo
-# %lang(pt) %{tde_prefix}/share/locale/pt/LC_MESSAGES/*.mo
-# %lang(pt_BR) %{tde_prefix}/share/locale/pt_BR/LC_MESSAGES/*.mo
-# %lang(ru) %{tde_prefix}/share/locale/ru/LC_MESSAGES/*.mo
-# %lang(rw) %{tde_prefix}/share/locale/rw/LC_MESSAGES/*.mo
-# %lang(sk) %{tde_prefix}/share/locale/sk/LC_MESSAGES/*.mo
-# %lang(sr) %{tde_prefix}/share/locale/sr/LC_MESSAGES/*.mo
-# %lang(sr@Latn) %{tde_prefix}/share/locale/sr@Latn/LC_MESSAGES/*.mo
-# %lang(sv) %{tde_prefix}/share/locale/sv/LC_MESSAGES/*.mo
-# %lang(ta) %{tde_prefix}/share/locale/ta/LC_MESSAGES/*.mo
-# %lang(th) %{tde_prefix}/share/locale/th/LC_MESSAGES/*.mo
-# %lang(tr) %{tde_prefix}/share/locale/tr/LC_MESSAGES/*.mo
-# %lang(uk) %{tde_prefix}/share/locale/uk/LC_MESSAGES/*.mo
-# %lang(zh_CN) %{tde_prefix}/share/locale/zh_CN/LC_MESSAGES/*.mo
+%lang(ar) %{tde_prefix}/share/locale/ar/LC_MESSAGES/*.mo
+%lang(be) %{tde_prefix}/share/locale/be/LC_MESSAGES/*.mo
+%lang(br) %{tde_prefix}/share/locale/br/LC_MESSAGES/*.mo
+%lang(ca) %{tde_prefix}/share/locale/ca/LC_MESSAGES/*.mo
+%lang(cs) %{tde_prefix}/share/locale/cs/LC_MESSAGES/*.mo
+%lang(cy) %{tde_prefix}/share/locale/cy/LC_MESSAGES/*.mo
+%lang(da) %{tde_prefix}/share/locale/da/LC_MESSAGES/*.mo
+%lang(de) %{tde_prefix}/share/locale/de/LC_MESSAGES/*.mo
+%lang(el) %{tde_prefix}/share/locale/el/LC_MESSAGES/*.mo
+%lang(en_GB) %{tde_prefix}/share/locale/en_GB/LC_MESSAGES/*.mo
+%lang(es) %{tde_prefix}/share/locale/es/LC_MESSAGES/*.mo
+%lang(et) %{tde_prefix}/share/locale/et/LC_MESSAGES/*.mo
+%lang(fi) %{tde_prefix}/share/locale/fi/LC_MESSAGES/*.mo
+%lang(fr) %{tde_prefix}/share/locale/fr/LC_MESSAGES/*.mo
+%lang(ga) %{tde_prefix}/share/locale/ga/LC_MESSAGES/*.mo
+%lang(gl) %{tde_prefix}/share/locale/gl/LC_MESSAGES/*.mo
+%lang(hu) %{tde_prefix}/share/locale/hu/LC_MESSAGES/*.mo
+%lang(is) %{tde_prefix}/share/locale/is/LC_MESSAGES/*.mo
+%lang(it) %{tde_prefix}/share/locale/it/LC_MESSAGES/*.mo
+%lang(ja) %{tde_prefix}/share/locale/ja/LC_MESSAGES/*.mo
+%lang(lt) %{tde_prefix}/share/locale/lt/LC_MESSAGES/*.mo
+%lang(ms) %{tde_prefix}/share/locale/ms/LC_MESSAGES/*.mo
+%lang(mt) %{tde_prefix}/share/locale/mt/LC_MESSAGES/*.mo
+%lang(nb) %{tde_prefix}/share/locale/nb/LC_MESSAGES/*.mo
+%lang(nds) %{tde_prefix}/share/locale/nds/LC_MESSAGES/*.mo
+%lang(nl) %{tde_prefix}/share/locale/nl/LC_MESSAGES/*.mo
+%lang(nn) %{tde_prefix}/share/locale/nn/LC_MESSAGES/*.mo
+%lang(pa) %{tde_prefix}/share/locale/pa/LC_MESSAGES/*.mo
+%lang(pl) %{tde_prefix}/share/locale/pl/LC_MESSAGES/*.mo
+%lang(pt) %{tde_prefix}/share/locale/pt/LC_MESSAGES/*.mo
+%lang(pt_BR) %{tde_prefix}/share/locale/pt_BR/LC_MESSAGES/*.mo
+%lang(ru) %{tde_prefix}/share/locale/ru/LC_MESSAGES/*.mo
+%lang(rw) %{tde_prefix}/share/locale/rw/LC_MESSAGES/*.mo
+%lang(sk) %{tde_prefix}/share/locale/sk/LC_MESSAGES/*.mo
+%lang(sr) %{tde_prefix}/share/locale/sr/LC_MESSAGES/*.mo
+%lang(sr@Latn) %{tde_prefix}/share/locale/sr@Latn/LC_MESSAGES/*.mo
+%lang(sv) %{tde_prefix}/share/locale/sv/LC_MESSAGES/*.mo
+%lang(ta) %{tde_prefix}/share/locale/ta/LC_MESSAGES/*.mo
+%lang(th) %{tde_prefix}/share/locale/th/LC_MESSAGES/*.mo
+%lang(tr) %{tde_prefix}/share/locale/tr/LC_MESSAGES/*.mo
+%lang(uk) %{tde_prefix}/share/locale/uk/LC_MESSAGES/*.mo
+%lang(zh_CN) %{tde_prefix}/share/locale/zh_CN/LC_MESSAGES/*.mo
 
