@@ -6,10 +6,6 @@
 #  Having KDE libraries may cause FTBFS here !
 
 # TDE variables
-%if "%{?tde_version}" == ""
-%define tde_version 14.1.5
-%endif
-
 %define tde_pkg kipi-plugins
 %define tde_prefix /opt/trinity
 
@@ -23,8 +19,8 @@
 %define tarball_name %{tde_pkg}-trinity
 
 Name:		trinity-%{tde_pkg}
-Version:	0.1.6
-Release:	%{?tde_version:%{tde_version}_}3
+Version:	14.1.6
+Release:	1
 Summary:	Image manipulation/handling plugins for KIPI aware programs [Trinity]
 Group:		System/Libraries
 URL:		http://www.trinitydesktop.org/
@@ -33,15 +29,15 @@ URL:		http://www.trinitydesktop.org/
 License:	GPLv2+
 
 
-Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/libraries/%{tarball_name}-%{tde_version}.tar.xz
+Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{version}/main/libraries/%{tarball_name}-%{version}.tar.xz
 
 BuildRequires: make
 
-BuildRequires: trinity-tdelibs-devel >= %{tde_version}
-BuildRequires: trinity-tdepim-devel >= %{tde_version}
-BuildRequires: trinity-%{_lib}kdcraw-devel >= %{tde_version}
-BuildRequires: trinity-%{_lib}kexiv2-devel
-BuildRequires: trinity-%{_lib}kipi-devel
+BuildRequires: trinity-tdelibs-devel >= %{version}
+BuildRequires: trinity-tdepim-devel >= %{version}
+BuildRequires: trinity-%{_lib}kdcraw-devel >= %{version}
+BuildRequires: trinity-%{_lib}kexiv2-devel >= %{version}
+BuildRequires: trinity-%{_lib}kipi-devel >= %{version}
 
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig
@@ -133,7 +129,7 @@ PicasaWebExport:     Export pictures to Picasa web service
 
 
 %prep
-%autosetup -n %{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}
+%autosetup -n %{tarball_name}-%{version}%{?preversion:~%{preversion}}
 
 %__cp "/usr/share/aclocal/libtool.m4" "admin/libtool.m4.in"
 %__cp "/usr/share/libtool/config/ltmain.sh" "admin/ltmain.sh" || %__cp "/usr/share/libtool/"*"/ltmain.sh" "admin/ltmain.sh" || %__cp "/usr/share/libtool/ltmain.sh" "admin/ltmain.sh"
